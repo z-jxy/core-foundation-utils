@@ -1,0 +1,8 @@
+[package]
+name = "tag_query"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+core-foundation = "0.9.4"
+core-foundation-sys = "0.8.6"
