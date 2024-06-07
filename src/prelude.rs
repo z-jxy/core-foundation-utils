@@ -1,9 +1,8 @@
-use core_foundation::array::{CFArray, CFArrayGetTypeID, CFArrayRef};
-use core_foundation::base::{CFGetTypeID, CFRelease, CFType, CFTypeRef, TCFType};
-use core_foundation::string::{CFString, CFStringRef};
-use core_foundation_sys::base::{kCFAllocatorDefault, CFAllocatorRef, CFOptionFlags};
-use std::collections::HashSet;
-use std::ptr;
+pub use core_foundation::array::{CFArray, CFArrayGetTypeID, CFArrayRef};
+pub use core_foundation::base::{CFGetTypeID, CFRelease, CFType, CFTypeRef, TCFType};
+pub use core_foundation::string::CFString;
+pub use core_foundation::string::CFStringRef;
+pub use core_foundation_sys::base::{kCFAllocatorDefault, CFAllocatorRef, CFOptionFlags};
 
 #[link(name = "CoreServices", kind = "framework")]
 extern "C" {
@@ -14,11 +13,15 @@ extern "C" {
         sortingAttrs: CFArrayRef,
     ) -> MDQueryRef;
 
+    pub fn MDItemCreate(allocator: CFAllocatorRef, path: CFStringRef) -> MDItemRef;
+
     pub fn MDQueryExecute(query: MDQueryRef, option: CFOptionFlags) -> Boolean;
     pub fn MDQueryGetResultCount(query: MDQueryRef) -> CFIndex;
     pub fn MDQueryGetResultAtIndex(query: MDQueryRef, idx: CFIndex) -> MDItemRef;
 
     pub fn MDItemCopyAttribute(item: MDItemRef, name: CFStringRef) -> CFTypeRef;
+
+    pub fn MDItemCopyAttributeNames(item: MDItemRef) -> CFArrayRef;
 
     pub static kMDItemUserTags: CFStringRef;
     pub static kMDItemPath: CFStringRef;

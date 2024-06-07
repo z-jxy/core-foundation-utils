@@ -1,15 +1,12 @@
-use core_foundation::array::{CFArray, CFArrayGetTypeID, CFArrayRef};
-use core_foundation::base::{CFGetTypeID, CFRelease, CFType, CFTypeRef, TCFType};
-use core_foundation::string::{kCFStringEncodingUTF8, CFString, CFStringGetCString, CFStringRef};
-use core_foundation_sys::base::{kCFAllocatorDefault, CFAllocatorRef, CFOptionFlags};
-use core_foundation_utils::prelude::*;
-use std::collections::HashSet;
+use core_foundation::string::{kCFStringEncodingUTF8, CFStringGetCString};
+
+use crate::prelude::*;
 use std::ptr;
 
-struct SpotlightApi;
+pub struct SpotlightApi;
 
 impl SpotlightApi {
-    fn search(query_string: impl Into<String>, item_type: KMDItemTypes) -> Vec<String> {
+    pub fn search(query_string: impl Into<String>, item_type: KMDItemTypes) -> Vec<String> {
         let query_string = CFString::new(&query_string.into());
         let item_type = unsafe { item_type.into_ref() };
 
@@ -63,25 +60,5 @@ impl SpotlightApi {
         }
 
         results
-    }
-}
-
-fn main() {
-    let args = std::env::args().collect::<Vec<String>>();
-
-    if args.len() < 2 {
-        eprintln!("Usage: mdfind <filename>");
-        std::process::exit(1);
-    }
-
-    let file_name = &args[1];
-
-    // let query_string = CFString::new(format!("kMDItemDisplayName = '*{file_name}*'").as_str());
-
-    for item in SpotlightApi::search(
-        format!("kMDItemDisplayName = '*{file_name}*'"),
-        KMDItemTypes::Path,
-    ) {
-        println!("[*] {}", item);
     }
 }

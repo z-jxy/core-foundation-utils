@@ -1,8 +1,12 @@
 [package]
-name = "tag_query"
+name = "core-foundation-utils"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+chrono = "0.4.38"
 core-foundation = "0.9.4"
 core-foundation-sys = "0.8.6"
+plist = "1.6.1"
+serde = { version = "1.0.203", features = ["derive"] }
+thiserror = "1.0.61"
