@@ -16,14 +16,16 @@ where
     P: AsRef<Path>,
     T: FromObjC,
 {
-    let path = file_name
-        .as_ref()
-        .to_str()
-        .expect("path is not valid unicode");
+    let Some(path) = file_name.as_ref().to_str() else {
+        return Err(MetadataError::BadPath {
+            path: file_name.as_ref().to_path_buf(),
+        });
+    };
+
     let file_cfstring = CFString::new(path);
+
     let item = unsafe { MDItemCreate(kCFAllocatorDefault, file_cfstring.as_concrete_TypeRef()) };
     if item.is_null() {
-        // eprintln!("Failed to create MDItem");
         return Err(MetadataError::NullItem {
             item: path.to_string(),
         });
@@ -35,7 +37,6 @@ where
             CFString::from_str(attr_name).unwrap().as_concrete_TypeRef(),
         )
     };
-
     if value.is_null() {
         // eprintln!("Failed to get attribute value");
         return Err(MetadataError::NullAttribute {

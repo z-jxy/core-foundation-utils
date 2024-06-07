@@ -1,7 +1,11 @@
+use std::path::{Path, PathBuf};
+
 use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum MetadataError {
+    #[error("invalid path: {path}")]
+    BadPath { path: PathBuf },
     #[error("item ({item}) is null")]
     NullItem { item: String },
     #[error("attribute ({attr}) is null")]
