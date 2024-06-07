@@ -8,7 +8,7 @@ use core_foundation::{
     string::{CFString, CFStringRef},
 };
 
-/// Gets the CF Type ID of a raw pointer and compares it to expected Type ID of the type being casted to.
+/// Gets the CFTypeID of a raw pointer and compares it to expected Type ID of the type being casted to.
 macro_rules! check_type {
     ($obj:expr, $type:ident) => {
         unsafe { CFGetTypeID($obj) == $type::type_id() }

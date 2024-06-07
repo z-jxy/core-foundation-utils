@@ -209,7 +209,7 @@ fn main() {
     let args = std::env::args().collect::<Vec<String>>();
 
     if args.len() < 2 {
-        eprintln!("Usage: mdfind <filename>");
+        eprintln!("Usage: mdls <filename>");
         std::process::exit(1);
     }
     let file_name = &args[1];

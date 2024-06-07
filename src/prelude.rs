@@ -53,6 +53,6 @@ impl KMDItemTypes {
 }
 
 #[repr(C)]
-pub struct __MDQuery;
+pub struct __MDQuery(u8);
 #[repr(C)]
-pub struct __MDItem;
+pub struct __MDItem(u8);
